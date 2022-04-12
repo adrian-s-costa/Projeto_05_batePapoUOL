@@ -1,0 +1,211 @@
+html, body{
+ font-family: 'Roboto';
+ height: 100%;   
+}
+.tela{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.pagina{
+    width: 375px;
+    background-color: #f3f2f2;
+    height: 100%;
+    position: relative;
+}
+.barra{
+    width: 100%;
+    height: 80px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px;
+}
+
+.topo{
+    width: 375px;
+    position: fixed;
+    top: 0;
+}
+
+.icon{
+    width: 42px;
+    height: 30px;
+}
+
+.logo{
+    width: 75px;
+    height: 53px;
+}
+
+.mensagens-agrupadas{
+    padding: 106px 0px 80px 0px;
+
+    height: 100%;
+    
+}
+
+.mensagem{
+    height: 40px;
+    margin: 4px 0px;
+    border-radius: 2px;
+    padding-left: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.horario{
+    color: #AAAAAA;
+}
+
+.entrada-saida{
+    background: #DCDCDC;
+}
+
+.normal{
+    background: #FFFFFF;
+}
+
+.reservada{
+    background: #FFDEDE;
+
+}
+
+.texto{
+    font-weight: 400;
+    font-size: 14px;
+    margin: 0px 3px;
+}
+
+.baixo{
+    width: 375px;
+    height: 80px;
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+input{
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: black;
+    
+}
+
+.direcionamento{
+    font-size: 12px;
+    margin-top: 6px;
+    display: none;
+}
+
+strong{
+    font-weight: bold;
+}
+
+.hidden {
+    display: none !important; 
+}
+
+.barra-lateral div{
+    display: flex;
+    align-items: center;
+}
+
+.lateral-topo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 84px;
+    width: 100%;
+    text-align: center;
+    
+}
+
+.barra-lateral{
+    background-color: #FFFFFF;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 74%;
+    height: 100%;
+}
+
+.barra-lateral .person {
+    margin-left: 20px;
+}
+
+.icon-lat{
+    margin-left: 20px;
+}
+
+.barra-lateral p {
+    margin-left: 10px;
+}
+
+.sessao{
+    height: 30px;
+    position: relative;
+}
+
+.certin{
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    color: green;
+    font-size: 20px;
+}
+
+.fundo-preto{
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 3;
+}
+
+.tela-inicio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    background-color: #FFFFFF;
+}
+
+.tela-inicio img{
+    margin-top: 72px;
+    width: 130px;
+    height: 92px;
+}
+
+.tela-inicio input{
+    width: 261px;
+    height: 54px;
+    margin-top: 96px;
+    background: #FFFFFF;
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+}
+
+.tela-inicio button{
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E7E7E7;
+    color: #696969;
+    width: 109px;
+    height: 45px;
+    border-radius: 9px;
+
+}
