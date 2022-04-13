@@ -125,7 +125,7 @@ strong{
     height: 84px;
     width: 100%;
     text-align: center;
-    
+    position: relative;
 }
 
 .barra-lateral{
@@ -208,4 +208,12 @@ strong{
     height: 45px;
     border-radius: 9px;
 
+}
+
+.fo{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 5px;
+    top: 5px;
 }
