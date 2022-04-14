@@ -185,10 +185,3 @@ function manterConexao(){
     }
 }
 
-
-
-
-
-window.onunload = function romperConexao(){
-
-}
