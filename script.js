@@ -1,41 +1,24 @@
+
 const telaInicio = `<div class="tela-inicio">
 <img src="imagens/logo 1.png">
 <input type="text" class="entrar">
 <button onclick="entrarUser()">Entrar</button>
 </div>`
 
-let mensagemEntrada
+
+
+
 
 const corpoCod = `<div class="barra topo">
 <img src="imagens/logo 1.png" class="logo">
 <ion-icon name="people" class="icon" onclick="aparecer()"></ion-icon>
 </div>
 <div class="mensagens-agrupadas">
-<div class="mensagem entrada-saida">
-    <p class="horario texto">(09:22:48)</p>
-    <p class = "texto" class="texto"> <strong>abdu</strong> entra jota</p>
-</div>
-<div class="mensagem normal">
-    <p class="horario texto">(09:22:48)</p>
-    <p class = "texto"><strong>abdu</strong> para <strong> todos </strong> helo bibasss</p>
-</div>
-<div class="mensagem normal">
-    <p class="horario texto">(09:22:48)</p>
-    <p class = "texto"><strong>helo</p>
-</div>
-<div class="mensagem reservada">
-    <p class="horario texto">(09:22:48)</p>
-    <p class = "texto">quieres?</p>
-</div>
-<div class="mensagem entrada-saida">
-    <p class="horario texto">(09:22:48)</p>
-    <p class = "texto">thau</p>
-</div>
 </div>
 <div class="fundo-preto hidden" >
 <div class="barra-lateral">
 <div class = "lateral-topo">
-    <ion-icon name="close-sharp" class="fo" onclick="aparecer()"></ion-icon>
+    <ion-icon name="close-sharp" class="sair" onclick="aparecer()"></ion-icon>
     <p>Escolha um contato pra enviar mensagem:</p>
 </div>
 <div class="sessao pessoa" onclick="marcar(this)">
@@ -73,13 +56,15 @@ const corpoCod = `<div class="barra topo">
     <input type="text" class="digitar" placeholder="Escreva aqui...">
     <p class="horario direcionamento">Enviando pra OFADSSE</p>
 </div>
-<ion-icon name="paper-plane-outline" class="icon"></ion-icon>
+<ion-icon name="paper-plane-outline" class="icon" onclick="testarMsg()"></ion-icon>
 </div>`
 
 
 
 window.onload = imprimirTela()
 
+let nome 
+let user = {}
 
 function aparecer(){
     let elemento = document.querySelector(".fundo-preto")
@@ -114,11 +99,10 @@ function marcar(elementoClicado){
 
 function entrarUser(){
     
-    
-    let nome = document.querySelector(".entrar").value
+    nome = document.querySelector(".entrar").value
 
-    let user = { 
-        name: nome
+    user = { 
+        name: nome,
     }
     
     console.log(user.name)
@@ -129,8 +113,16 @@ function entrarUser(){
     requisicao.catch(tratarErro);
     
     function tratarSucesso(resposta) {
+        
         document.querySelector(".tela-inicio").classList.add("hidden")
         abrirChat()
+        const mensagemEntrada = `<div class="mensagem entrada-saida">
+        <p class="horario texto">(09:22:48)</p>
+        <p class = "texto" class="texto"> <strong>${nome}</strong> entra </p>
+        </div>`
+        espaçoDasMensagens = document.querySelector(".mensagens-agrupadas")
+        espaçoDasMensagens.innerHTML += mensagemEntrada
+        manterConexao()
     }
 
     function tratarErro(erro) {
@@ -154,3 +146,49 @@ function abrirChat(){
     tela.innerHTML = corpoCod
 }
 
+function testarMsg(){
+    const espaçoDasMensagens = document.querySelector(".mensagens-agrupadas")
+    let mensagemm = document.querySelector(".digitar").value
+    const message = `<div class="mensagem entrada-saida">
+    <p class="horario texto">(09:22:48)</p>
+    <p class = "texto"> ${mensagemm} </p>
+    </div>`
+    espaçoDasMensagens.innerHTML += message
+
+    
+
+    
+
+}
+
+let requisicao2
+
+function manterConexao(){
+
+    function mandarStatus(){
+        requisicao2 = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", user)
+        console.log("ta online bonitão")
+    }
+
+    requisicao2 = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", user)
+    requisicao2.then(tratarSucesso);
+    requisicao2.catch(tratarErro);
+
+    let meuInterval = setInterval(mandarStatus, 4000)
+
+    function tratarSucesso(){
+        setInterval(meuInterval, 4000)
+    }
+
+    function tratarErro(){
+        clearInterval(meuInterval)
+    }
+}
+
+
+
+
+
+window.onunload = function romperConexao(){
+
+}
