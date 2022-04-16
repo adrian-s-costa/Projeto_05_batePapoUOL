@@ -116,7 +116,6 @@ strong{
 
 .barra-lateral div{
     display: flex;
-    align-items: center;
 }
 
 .lateral-topo{
@@ -136,6 +135,7 @@ strong{
     top: 0;
     width: 74%;
     height: 100%;
+    z-index: 3;
 }
 
 .barra-lateral .person {
@@ -165,11 +165,12 @@ strong{
 
 .fundo-preto{
     top: 0;
+    left: 0;
     position: absolute;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
-    z-index: 3;
+    z-index: 2;
 }
 
 .tela-inicio{
@@ -217,4 +218,9 @@ strong{
     height: 20px;
     left: 5px;
     top: 5px;
+}
+
+.users{
+    display: flex;
+    flex-direction: column;
 }
