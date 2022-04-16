@@ -14,7 +14,6 @@ html, body{
     background-color: #f3f2f2;
     height: 100%;
     position: relative;
-    padding-bottom: 80px;
 }
 .barra{
     width: 100%;
@@ -36,6 +35,7 @@ html, body{
 .icon{
     width: 42px;
     height: 30px;
+    cursor: pointer;
 }
 
 .logo{
@@ -45,33 +45,38 @@ html, body{
 
 .mensagens-agrupadas{
     padding-top:  106px;
-    padding-bottom: 180px;
+    padding-bottom: 80px;
     height: 100%;
-    
+    overflow: hidden;
+    overflow-y: auto;
+    white-space: normal;
 }
 
 .mensagem{
-    height: 40px;
+    min-height: 40px;
+    height: fit-content;
     margin: 4px 0px;
     border-radius: 2px;
     padding-left: 8px;
     display: flex;
     align-items: center;
+    
+
 }
 
-.horario{
+.time{
     color: #AAAAAA;
 }
 
-.entrada-saida{
+.status{
     background: #DCDCDC;
 }
 
-.normal{
+.message{
     background: #FFFFFF;
 }
 
-.reservada{
+.private_message{
     background: #FFDEDE;
 
 }
@@ -130,12 +135,13 @@ strong{
 
 .barra-lateral{
     background-color: #FFFFFF;
-    position: absolute;
-    right: 0;
+    position: fixed;
+    right: 27%;
     top: 0;
-    width: 74%;
+    width: 30%;
     height: 100%;
     z-index: 3;
+    overflow-y: auto;
 }
 
 .barra-lateral .person {
@@ -144,6 +150,7 @@ strong{
 
 .icon-lat{
     margin-left: 20px;
+    
 }
 
 .barra-lateral p {
@@ -165,12 +172,13 @@ strong{
 
 .fundo-preto{
     top: 0;
-    left: 0;
-    position: absolute;
-    width: 100%;
+    right: 30,5%;
+    position: fixed;
+    width: 40%;
     height: 100%;
     background: rgba(0, 0, 0, 0.6);
     z-index: 2;
+
 }
 
 .tela-inicio{
@@ -212,15 +220,14 @@ strong{
 
 }
 
-.sair{
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    left: 5px;
-    top: 5px;
-}
 
 .users{
     display: flex;
     flex-direction: column;
 }
+
+.nomeUser, .visibilidade {
+    cursor: pointer;
+}
+
+

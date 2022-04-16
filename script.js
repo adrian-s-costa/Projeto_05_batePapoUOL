@@ -22,7 +22,7 @@ const corpoCod = `<div class="barra topo">
 </div>
 <div class="sessao pessoa" onclick="marcar(this)">
     <ion-icon name="person" class="icon-lat"></ion-icon>
-    <p>Todos</p>
+    <p class = "nomeUser">Todos</p>
     <ion-icon name="checkmark" class="certin hidden"></ion-icon>
 </div>
 <div class = "users">
@@ -31,14 +31,16 @@ const corpoCod = `<div class="barra topo">
 <div class="lateral-topo">
     <p>Escolha a visibilidade:</p>
 </div>
-<div class="sessao visibilidade" onclick="marcar(this)">
+<div class="sessao visibilidade" onclick="marcar2(this)">
     <ion-icon name="lock-open" class="icon-lat"></ion-icon>
     <p>Todos</p>
+    <p class = "msg hidden">message</p>
     <ion-icon name="checkmark" class="certin hidden"></ion-icon>
 </div>
-<div class="sessao visibilidade" onclick="marcar(this)">
+<div class="sessao visibilidade" onclick="marcar2(this)">
     <ion-icon name="lock-closed" class="icon-lat"></ion-icon>
     <p>Reservadamente</p>
+    <p class = "msg hidden">private_message</p>
     <ion-icon name="checkmark" class="certin hidden"></ion-icon>
 </div>
 </div>
@@ -46,38 +48,41 @@ const corpoCod = `<div class="barra topo">
 <div class="barra baixo">
 <div>
     <input type="text" class="digitar" placeholder="Escreva aqui...">
-    <p class="horario direcionamento">Enviando pra OFADSSE</p>
+    <p class="horario direcionamento">Enviando pra</p>
 </div>
-<ion-icon name="paper-plane-outline" class="icon" onclick="testarMsg()"></ion-icon>
+<ion-icon name="paper-plane-outline" class="icon" onclick="enviarMensagem()"></ion-icon>
 </div>`
 
 
 
 window.onload = imprimirTela()
 
-let userSelecionado
+let userSelecionado, userSelecionado2
 let nome 
-let user = {}
+let user
 let mensagemEnviar = {
     from: 0,
     to: 0,
     text: 0,
     type: 0,
 }
+let selecionado
+let selecionado2
+
+let destinatario
+let tipo
 
 function aparecer(){
     const fundoPreto = document.querySelector(".fundo-preto")
     const barraLateral = document.querySelector(".barra-lateral")
-    console.log(fundoPreto)
     fundoPreto.classList.toggle("hidden")
     barraLateral.classList.toggle("hidden") 
 }
 
 function marcar(elementoClicado){
     userSelecionado = elementoClicado
-    console.log(elementoClicado)
-    const selecionado = document.querySelector(".sessao.pessoa.selecionado")
-    const selecionado2 = document.querySelector(".sessao.visibilidade.selecionado")
+    selecionado = document.querySelector(".sessao.pessoa.selecionado")
+    
 
     if (selecionado !== null && userSelecionado.classList.contains("pessoa")){
         selecionado.querySelector(".certin").classList.add("hidden")
@@ -85,17 +90,34 @@ function marcar(elementoClicado){
     }
 
     
-
-    if (selecionado2 !== null && userSelecionado.classList.contains("visibilidade")){
-        selecionado2.querySelector(".certin").classList.add("hidden")
-        selecionado2.classList.remove("selecionado")
-    }
    
     
     userSelecionado.classList.add("selecionado")
     userSelecionado.querySelector(".certin").classList.remove("hidden")
     
+    console.log(userSelecionado)
+    destinatario = userSelecionado.querySelector(".nomeUser").innerHTML
+
 }
+
+function marcar2(elementoClicado){
+    
+    userSelecionado2 = elementoClicado
+    selecionado2 = document.querySelector(".sessao.visibilidade.selecionado")
+
+    
+    
+    if (selecionado2 !== null && userSelecionado2.classList.contains("visibilidade")){
+        selecionado2.querySelector(".certin").classList.add("hidden")
+        selecionado2.classList.remove("selecionado")
+    }
+
+    userSelecionado2.classList.add("selecionado")
+    userSelecionado2.querySelector(".certin").classList.remove("hidden")
+
+    tipo = userSelecionado2.querySelector(".msg.hidden").innerHTML
+}
+
 
 
 function entrarUser(){
@@ -107,30 +129,22 @@ function entrarUser(){
         name: nome,
     }
     
-    console.log(user.name)
 
     const requisicao = axios.post('https://mock-api.driven.com.br/api/v6/uol/participants', user)
 
 
-    console.log(user)
 
 
     requisicao.then(tratarSucesso);
     requisicao.catch(tratarErro);
     
-    function tratarSucesso(resposta) {
+    function tratarSucesso() {
         
         document.querySelector(".tela-inicio").classList.add("hidden")
         abrirChat()
-        const mensagemEntrada = `<div class="mensagem entrada-saida">
-        <p class="horario texto">()</p>
-        <p class = "texto" class="texto"> <strong>${nome}</strong> entra </p>
-        </div>`
-        espaçoDasMensagens = document.querySelector(".mensagens-agrupadas")
-        espaçoDasMensagens.innerHTML += mensagemEntrada
         manterConexao()
-
         usersON()
+        getMessages()
 
     }
 
@@ -155,31 +169,6 @@ function abrirChat(){
     tela.innerHTML = corpoCod
 }
 
-function testarMsg(){
-    const espaçoDasMensagens = document.querySelector(".mensagens-agrupadas")
-    mensagemEnviar.text = document.querySelector(".digitar").value
-    mensagemEnviar.from = nome
-    mensagemEnviar.to = userSelecionado.querySelector(".nomeUser").innerHTML
-    console.log(mensagemEnviar)
-    const message = `<div class="mensagem entrada-saida">
-    <p class="horario texto">()</p>
-    <p class = "texto"> ${mensagemEnviar.text} </p>
-    </div>`
-    espaçoDasMensagens.innerHTML += message
-
-
-}
-
-
-
-function entradas(){
-
-
-   
-    
-   
-   
-}
 
 let requisicao2
 
@@ -187,7 +176,6 @@ function manterConexao(){
 
     function mandarStatus(){
         requisicao2 = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", user)
-        console.log("ta online bonitão")
     }
 
     requisicao2 = axios.post("https://mock-api.driven.com.br/api/v6/uol/status", user)
@@ -209,40 +197,102 @@ let responseData
 
 function usersON(){
 
-    let participantes = axios.get('https://mock-api.driven.com.br/api/v6/uol/participants')
-    .then(function (response){
+    axios.get('https://mock-api.driven.com.br/api/v6/uol/participants')
+    .then(function (){
         setInterval(usersOnline, 10000)
     })
 
     function usersOnline(){
         axios.get('https://mock-api.driven.com.br/api/v6/uol/participants')
         .then(function (response){
-        responseData = response.data
-        console.log(responseData.length)
+            responseData = response.data
+            let lugarOn = document.querySelector(".users")
+            lugarOn.innerHTML = ""
         
-        let lugarOn = document.querySelector(".users")
-        lugarOn.innerHTML = ""
+            for (let i = 0; i < responseData.length; i++){
+                const moldeContato = `<div class="sessao pessoa" onclick="marcar(this)">
+                <ion-icon name="person-circle" class="icon-lat"></ion-icon>
+                <p class = "nomeUser">${responseData[i].name}</p>
+                <ion-icon name="checkmark" class="certin hidden"></ion-icon>
+                </div>`
+                lugarOn.innerHTML += moldeContato
+            
+            }
+        })
+
         
-        for (let i = 0; i < responseData.length; i++){
-            const moldeContato = `<div class="sessao pessoa" onclick="marcar(this)">
-            <ion-icon name="person-circle" class="icon-lat"></ion-icon>
-            <p class = "nomeUser">${responseData[i].name}</p>
-            <ion-icon name="checkmark" class="certin hidden"></ion-icon>
-            </div>`
-            lugarOn.innerHTML += moldeContato
-        }
+    }
+}
+    
+let  messagesData
+
+function getMessages(){
+
+    axios.get('https://mock-api.driven.com.br/api/v6/uol/messages')
+    .then(function(){
+        setInterval(getMessages2, 3000)
+    })
+
+    function getMessages2(){
+        axios.get('https://mock-api.driven.com.br/api/v6/uol/messages')
+        .then(function(resposta){
+            messagesData = resposta.data
+            const espacoDasMensagens = document.querySelector(".mensagens-agrupadas")
+            espacoDasMensagens.innerHTML = ""
+            for(let i = 0; i < messagesData.length; i++){
+            
+                const messageMolde = `<div class="mensagem ${messagesData[i].type}">
+                <p class="time texto">(${messagesData[i].time})</p>
+                <p class = "texto"> ${messagesData[i].from} ${messagesData[i].text} </p>
+                </div>`
+    
+                const messageMoldeNormal = `<div class="mensagem ${messagesData[i].type}">
+                <p class="time texto">(${messagesData[i].time})</p>
+                <p class = "texto"><strong>${messagesData[i].from}</strong> para <strong> ${messagesData[i].to}: </strong> ${messagesData[i].text}</p>
+                </div>`
+
+                const messageMoldePriv = `<div class="mensagem ${messagesData[i].type}">
+                <p class="time texto">(${messagesData[i].time})</p>
+                <p class = "texto"><strong>${messagesData[i].from}</strong> reservadamente para <strong> ${messagesData[i].to}: </strong> ${messagesData[i].text}</p>
+                </div>`
+            
+                if (messagesData[i].to === nome && messagesData[i].type === "private_message"){
+                    espacoDasMensagens.innerHTML += messageMoldePriv
+                }
+                if (messagesData[i].to === "Todos" && messagesData[i].type !== "status"){
+                    espacoDasMensagens.innerHTML += messageMoldeNormal
+                }
+                if (messagesData[i].type === "status"){
+                    espacoDasMensagens.innerHTML += messageMolde
+                }
+                if (messagesData[i].type !== "private_message" && messagesData[i].to !== "Todos" && messagesData[i].type !== "status"){
+                    espacoDasMensagens.innerHTML += messageMoldeNormal
+                }
+            }
+
         })
     }
 
-    const mensagemEntrada = `<div class="mensagem entrada-saida">
-        <p class="horario texto">()</p>
-        <p class = "texto" class="texto"> <strong>${nome}</strong> entra </p>
-        </div>`
 
 }
 
-function getMessages(){
-    axios.get()
+function enviarMensagem(){
+    
+    mensagemEnviar.text = document.querySelector(".digitar").value
+    mensagemEnviar.from = nome
+    mensagemEnviar.to = destinatario
+    mensagemEnviar.type = tipo
+    envioDeMensage = axios.post("https://mock-api.driven.com.br/api/v6/uol/messages", mensagemEnviar)
+    .then(function(){
+
+        console.log("Deu certo")
+
+    }).catch(function(){
+        console.log("F")
+    })
+    
+    
 }
+
 
 
