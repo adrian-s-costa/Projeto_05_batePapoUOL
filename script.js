@@ -64,7 +64,7 @@ let mensagemEnviar = {
     text: 0,
     type: 0,
 }
-let selecionado, selecionado2, destinatario, tipo, tipo2, responseData, requisicao2
+let selecionado, selecionado2, destinatario, tipo, tipo2, responseData, requisicao2, messagesData
 var pressedEnter = false;
 
 function aparecer(){
@@ -212,7 +212,7 @@ function usersON(){
             for (let i = 0; i < responseData.length; i++){
                 const moldeContato = `<div class="sessao pessoa" onclick="marcar(this)">
                 <ion-icon name="person-circle" class="icon-lat"></ion-icon>
-                <p class = "nomeUser">${responseData[i].name}</p>
+                <p class = "nomeUser" data-identifier="participant">${responseData[i].name}</p>
                 <ion-icon name="checkmark" class="certin hidden"></ion-icon>
                 </div>`
                 lugarOn.innerHTML += moldeContato
@@ -224,7 +224,6 @@ function usersON(){
     }
 }
     
-let  messagesData
 
 function getMessages(){
 
@@ -241,18 +240,18 @@ function getMessages(){
             espacoDasMensagens.innerHTML = ""
             for(let i = 0; i < messagesData.length; i++){
             
-                const messageMolde = `<div class="mensagem ${messagesData[i].type}">
+                const messageMolde = `<div class="mensagem ${messagesData[i].type}" data-identifier = "visibility">
                 <p class="time texto">(${messagesData[i].time})</p>
                 <p class = "texto"> ${messagesData[i].from} ${messagesData[i].text} </p>
                 </div>`
     
-                const messageMoldeNormal = `<div class="mensagem ${messagesData[i].type}">
+                const messageMoldeNormal = `<div class="mensagem ${messagesData[i].type}" data-identifier = "visibility">
                 <p class="time texto">(${messagesData[i].time})</p>
-                <p class = "texto"><strong>${messagesData[i].from}</strong> para <strong> ${messagesData[i].to}: </strong> ${messagesData[i].text}</p>
+                <p class = "texto" ><strong>${messagesData[i].from}</strong> para <strong> ${messagesData[i].to}: </strong> ${messagesData[i].text}</p>
                 </div>`
 
-                const messageMoldePriv = `<div class="mensagem ${messagesData[i].type}">
-                <p class="time texto">(${messagesData[i].time})</p>
+                const messageMoldePriv = `<div class="mensagem ${messagesData[i].type}" data-identifier = "visibility">
+                <p class="time texto" >(${messagesData[i].time})</p>
                 <p class = "texto"><strong>${messagesData[i].from}</strong> reservadamente para <strong> ${messagesData[i].to}: </strong> ${messagesData[i].text}</p>
                 </div>`
             
