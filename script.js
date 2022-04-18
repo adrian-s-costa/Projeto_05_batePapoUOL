@@ -33,13 +33,13 @@ const corpoCod = `<div class="barra topo">
 </div>
 <div class="sessao visibilidade" onclick="marcar2(this)">
     <ion-icon name="lock-open" class="icon-lat"></ion-icon>
-    <p>Todos</p>
+    <p class = "nomeTipo">Todos</p>
     <p class = "msg hidden">message</p>
     <ion-icon name="checkmark" class="certin hidden"></ion-icon>
 </div>
 <div class="sessao visibilidade" onclick="marcar2(this)">
     <ion-icon name="lock-closed" class="icon-lat"></ion-icon>
-    <p>Reservadamente</p>
+    <p class = nomeTipo>Reservadamente</p>
     <p class = "msg hidden">private_message</p>
     <ion-icon name="checkmark" class="certin hidden"></ion-icon>
 </div>
@@ -48,7 +48,7 @@ const corpoCod = `<div class="barra topo">
 <div class="barra baixo">
 <div>
     <input type="text" class="digitar" placeholder="Escreva aqui...">
-    <p class="horario direcionamento">Enviando pra</p>
+    <div class = "tomoules"> </div>
 </div>
 <ion-icon name="paper-plane-outline" class="icon" onclick="enviarMensagem()"></ion-icon>
 </div>`
@@ -68,9 +68,8 @@ let mensagemEnviar = {
 }
 let selecionado
 let selecionado2
-
 let destinatario
-let tipo
+let tipo, tipo2
 
 function aparecer(){
     const fundoPreto = document.querySelector(".fundo-preto")
@@ -97,6 +96,8 @@ function marcar(elementoClicado){
     
     console.log(userSelecionado)
     destinatario = userSelecionado.querySelector(".nomeUser").innerHTML
+    
+    fromToVisible()
 
 }
 
@@ -116,6 +117,9 @@ function marcar2(elementoClicado){
     userSelecionado2.querySelector(".certin").classList.remove("hidden")
 
     tipo = userSelecionado2.querySelector(".msg.hidden").innerHTML
+    tipo2 = userSelecionado2.querySelector(".nomeTipo").innerHTML
+
+    fromToVisible()
 }
 
 
@@ -268,6 +272,8 @@ function getMessages(){
                 if (messagesData[i].type !== "private_message" && messagesData[i].to !== "Todos" && messagesData[i].type !== "status"){
                     espacoDasMensagens.innerHTML += messageMoldeNormal
                 }
+                
+                
             }
 
         })
@@ -292,6 +298,12 @@ function enviarMensagem(){
     })
     
     
+}
+
+function fromToVisible(){
+    const moldeFTV = `<p class="horario direcionamento">Enviando pra ${destinatario} (${tipo2})</p>`
+    const lugar = document.querySelector(".tomoules")
+    lugar.innerHTML = moldeFTV
 }
 
 
