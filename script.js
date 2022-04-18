@@ -48,7 +48,7 @@ const corpoCod = `<div class="barra topo">
 <div class="barra baixo">
 <div>
     <input type="text" class="digitar" placeholder="Escreva aqui...">
-    <div class = "tomoules"> </div>
+    <div class = "lugarFTV"> </div>
 </div>
 <ion-icon name="paper-plane-outline" class="icon" onclick="enviarMensagem()"></ion-icon>
 </div>`
@@ -57,19 +57,15 @@ const corpoCod = `<div class="barra topo">
 
 window.onload = imprimirTela()
 
-let userSelecionado, userSelecionado2
-let nome 
-let user
+let userSelecionado, userSelecionado2, nome, user
 let mensagemEnviar = {
     from: 0,
     to: 0,
     text: 0,
     type: 0,
 }
-let selecionado
-let selecionado2
-let destinatario
-let tipo, tipo2
+let selecionado, selecionado2, destinatario, tipo, tipo2, responseData, requisicao2
+var pressedEnter = false;
 
 function aparecer(){
     const fundoPreto = document.querySelector(".fundo-preto")
@@ -174,7 +170,7 @@ function abrirChat(){
 }
 
 
-let requisicao2
+
 
 function manterConexao(){
 
@@ -197,7 +193,7 @@ function manterConexao(){
     }
 }
 
-let responseData
+
 
 function usersON(){
 
@@ -294,7 +290,8 @@ function enviarMensagem(){
         console.log("Deu certo")
 
     }).catch(function(){
-        console.log("F")
+        alert("O usuário não se encontra na sala")
+        window.location.reload()
     })
     
     
@@ -302,9 +299,25 @@ function enviarMensagem(){
 
 function fromToVisible(){
     const moldeFTV = `<p class="horario direcionamento">Enviando pra ${destinatario} (${tipo2})</p>`
-    const lugar = document.querySelector(".tomoules")
+    const lugar = document.querySelector(".lugarFTV")
     lugar.innerHTML = moldeFTV
 }
 
 
 
+function enter(){
+
+document.onkeyup=function(e){
+	if(e.which == 13)
+	pressedEnter = false;
+}
+
+document.onkeydown=function(e){
+	if(e.which == 13){
+		pressedEnter = true;
+    }
+    if (pressedEnter == enter){
+        enviarMensagem()
+    }
+}
+}
