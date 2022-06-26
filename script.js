@@ -315,7 +315,7 @@ document.onkeydown=function(e){
 	if(e.which == 13){
 		pressedEnter = true;
     }
-    if (pressedEnter == enter){
+    if (pressedEnter){
         enviarMensagem()
     }
 }
